@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <style>
+      main{
+        width:700px;
+        margin:40 auto;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+      }
+      #counters{
+        margin-top:30px;
+        text-align: center;
+      }
+      .column{
+        margin:20px;
+      }
+      button{
+        padding:5px 8px;
+      }
+      .column button{
+        font-size:20px;
+        padding:5px 10px;
+        border-radius: 100px;
+        width:40px;
+      }
+      .bar{
+        fill: #00d8b7;
+      }
+      .bar:hover{
+        fill:#00a88e;
+      }
+    </style>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <svg width="700" height="500"></svg>
+      <div id="counters">
+        <button id="re" onclick="generate()">ReGenerate</button>
+        <div id="points" class="column">
+          <span>Number of Points</span>
+          <button class="minus" onclick="updatePoints(+this.parentElement.getAttribute('data-root')-1)">-</button>
+          <span class="number"></span>
+          <button class="plus" onclick="updatePoints(+this.parentElement.getAttribute('data-root')+1)">+</button>
+        </div>
+        <div id="bars" class="column">
+          <span>Number of Buckets</span>
+          <button class="minus" onclick="updateBars(+this.parentElement.getAttribute('data-root')-1)">-</button>
+          <span class="number"></span>
+          <button class="plus" onclick="updateBars(+this.parentElement.getAttribute('data-root')+1)">+</button>
+        </div>
+      </div>
+    </main>
+    <script src="main.js"></script>
+    <script>
+      var points = document.getElementById('points')
+      var bars = document.getElementById('bars')
+      function updatePoints(root){
+        if(root < 1 || root >= 30) return;
+        num = Math.floor(Math.pow(root,2))
+        points.setAttribute('data-root',root)
+        points.querySelector('.number').innerHTML = num
+        generate()
+      }
+      function updateBars(root){
+        if(root < 1 || root >= 17) return;
+        bucketCount = Math.floor(Math.pow(root,2))
+        bars.setAttribute('data-root',root)
+        bars.querySelector('.number').innerHTML = bucketCount
+        updateBarGraph()
+      }
+      updatePoints(4)
+      updateBars(4)
+    </script>
+  </body>
+</html>
